@@ -1,97 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Snake Game</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 		canvas {
-			border: 1px solid #000;
+			border: 1px solid black;
+			background-color: white;
 		}
 	</style>
 </head>
 <body>
-	<canvas id="gameCanvas" width="320" height="240"></canvas>
-
-	<script>
-		// Define canvas and context variables
-		var canvas = document.getElementById("gameCanvas");
-		var ctx = canvas.getContext("2d");
-
-		// Set up game variables
-		var snake = [{x: 160, y: 120}];
-		var food = {x: Math.floor(Math.random() * 320), y: Math.floor(Math.random() * 240)};
-		var score = 0;
-		var direction = "right";
-		var gameLoop;
-
-		// Draw the snake and food
-		function draw() {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = "#f00";
-			ctx.fillRect(food.x, food.y, 10, 10);
-			ctx.fillStyle = "#00f";
-			for (var i = 0; i < snake.length; i++) {
-				ctx.fillRect(snake[i].x, snake[i].y, 10, 10);
-			}
-		}
-
-		// Update the game state
-		function update() {
-			// Move the snake
-			var head = {x: snake[0].x, y: snake[0].y};
-			switch (direction) {
-				case "up":
-					head.y -= 10;
-					break;
-				case "down":
-					head.y += 10;
-					break;
-				case "left":
-					head.x -= 10;
-					break;
-				case "right":
-					head.x += 10;
-					break;
-			}
-			snake.unshift(head);
-
-			// Check for collision with food
-			if (head.x === food.x && head.y === food.y) {
-				score++;
-				food = {x: Math.floor(Math.random() * 320), y: Math.floor(Math.random() * 240)};
-			} else {
-				snake.pop();
-			}
-
-			// Check for collision with walls
-			if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-				clearInterval(gameLoop);
-				alert("Game over! Score: " + score);
-			}
-
-			// Check for collision with self
-			for (var i = 1; i < snake.length; i++) {
-				if (head.x === snake[i].x && head.y === snake[i].y) {
-					clearInterval(gameLoop);
-					alert("Game over! Score: " + score);
-				}
-			}
-		}
-
-		// Handle touch events to change direction
-		canvas.addEventListener("touchstart", function(e) {
-			if (e.touches[0].clientX < canvas.width / 2) {
-				direction = "left";
-			} else {
-				direction = "right";
-			}
-		});
-
-		// Start the game loop
-		gameLoop = setInterval(function() {
-			update();
-			draw();
-		}, 100);
-	</script>
+	<canvas id="canvas" width="320" height="480"></canvas>
+	<script src="snake.js"></script>
 </body>
 </html>
